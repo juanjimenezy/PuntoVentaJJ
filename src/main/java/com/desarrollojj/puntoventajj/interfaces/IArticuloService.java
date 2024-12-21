@@ -3,6 +3,7 @@ package com.desarrollojj.puntoventajj.interfaces;
 import com.desarrollojj.puntoventajj.models.Articulo;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IArticuloService {
 
@@ -16,6 +17,6 @@ public interface IArticuloService {
 
     public Articulo buscarArticulo(Articulo articulo);
 
-    public Articulo buscarArticulo(Long id);
+    public Optional<Articulo> buscarArticulo(Long id);
 
 }
