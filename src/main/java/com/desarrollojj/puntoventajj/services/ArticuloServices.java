@@ -12,8 +12,12 @@ import java.util.Optional;
 @Service
 public class ArticuloServices implements IArticuloService {
 
+    private final ArticuloRepository articuloRepository;
+
     @Autowired
-    private ArticuloRepository articuloRepository;
+    public ArticuloServices(ArticuloRepository articuloRepository) {
+        this.articuloRepository = articuloRepository;
+    }
 
     @Override
     public Articulo insertarArticulo(Articulo articulo) {
@@ -22,12 +26,12 @@ public class ArticuloServices implements IArticuloService {
 
     @Override
     public void eliminarArticulo(Articulo articulo) {
-        articuloRepository.save(articulo);
+        articuloRepository.delete(articulo);
     }
 
     @Override
     public Articulo modificarArticulo(Articulo articulo) {
-        Articulo articuloModify = articuloRepository.findById(articulo.getId()).orElse(null);
+        Articulo articuloModify = articuloRepository.findById(articulo.getId()).orElseThrow();
         articuloModify.setNombre(articulo.getNombre());
         articulo.setDescripcion(articulo.getDescripcion());
         return articuloRepository.save(articuloModify);
