@@ -1,8 +1,6 @@
 package com.desarrollojj.puntoventajj.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
@@ -11,6 +9,8 @@ import java.io.Serializable;
 public class Articulo implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_sequence_articulo")
+    @SequenceGenerator(name = "id_sequence_articulo", sequenceName = "sq_id_articulo", allocationSize = 1, initialValue = 100)
     private Long id;
 
     private String nombre;

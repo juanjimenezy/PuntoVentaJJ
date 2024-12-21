@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,8 +20,14 @@ public class ArticuloController {
     private ArticuloServices articuloServices;
 
     @GetMapping("/articulos")
-    public ResponseEntity<List<Articulo>> getAll() {
+    public ResponseEntity<List<Articulo>> obtenerArticulos() {
         return new ResponseEntity<List<Articulo>>(articuloServices.listarArticulos(), HttpStatus.OK);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Articulo> crearArticulo(@RequestBody Articulo articulo) {
+        Articulo newArticulo = new Articulo(articulo.getNombre(), articulo.getDescripcion());
+        return new ResponseEntity<Articulo>(articuloServices.insertarArticulo(newArticulo),HttpStatus.OK);
     }
 
 }

@@ -15,8 +15,8 @@ public class ArticuloServices implements IArticuloService {
     private ArticuloRepository articuloRepository;
 
     @Override
-    public void insertarArticulo(Articulo articulo) {
-
+    public Articulo insertarArticulo(Articulo articulo) {
+        return articuloRepository.save(articulo);
     }
 
     @Override
@@ -25,12 +25,11 @@ public class ArticuloServices implements IArticuloService {
     }
 
     @Override
-    public void modificarArticulo(Articulo articulo) {
+    public Articulo modificarArticulo(Articulo articulo) {
         Articulo articuloModify = articuloRepository.findById(articulo.getId()).orElse(null);
         articuloModify.setNombre(articulo.getNombre());
         articulo.setDescripcion(articulo.getDescripcion());
-        articuloRepository.save(articuloModify);
-
+        return articuloRepository.save(articuloModify);
     }
 
     @Override
