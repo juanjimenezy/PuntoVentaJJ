@@ -1,6 +1,8 @@
 package com.desarrollojj.puntoventajj.controllers;
 
+import com.desarrollojj.puntoventajj.models.Articulo;
 import com.desarrollojj.puntoventajj.models.Kardex;
+import com.desarrollojj.puntoventajj.services.ArticuloServices;
 import com.desarrollojj.puntoventajj.services.KardexServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +19,12 @@ public class KardexController {
 
     private final KardexServices kardexServices;
 
+    private final ArticuloServices articuloServices;
+
     @Autowired
-    public KardexController(KardexServices kardexServices) {
+    public KardexController(KardexServices kardexServices, ArticuloServices articuloServices) {
         this.kardexServices = kardexServices;
+        this.articuloServices = articuloServices;
     }
 
     @GetMapping()
@@ -30,6 +35,8 @@ public class KardexController {
 
     @PostMapping("/operacion")
     public ResponseEntity<Kardex> crearKardex(@RequestBody Kardex kardex) {
+        Articulo articulo = articuloServices.buscarArticulo(kardex.getArticulo().getId()).orElse(null);
+        kardex.setArticulo(articulo);
         kardex = kardexServices.ingresarOperacion(kardex);
         return new ResponseEntity<>(kardex, HttpStatus.CREATED);
     }

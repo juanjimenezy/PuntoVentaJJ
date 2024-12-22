@@ -3,6 +3,7 @@ package com.desarrollojj.puntoventajj.models;
 import com.desarrollojj.puntoventajj.enums.KardexOperacionEnum;
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -11,9 +12,11 @@ import java.math.BigDecimal;
 public class Kardex implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_sequence_kardex")
+    @SequenceGenerator(name = "id_sequence_kardex", sequenceName = "sq_id_kardex", allocationSize = 1, initialValue = 100)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "articulo_id")
     private Articulo articulo;
 
@@ -21,6 +24,10 @@ public class Kardex implements Serializable {
     private KardexOperacionEnum operacion;
 
     private BigDecimal precio;
+
+    private int cantidad;
+
+    private String descripcion;
 
     public Long getId() {
         return id;
@@ -54,5 +61,14 @@ public class Kardex implements Serializable {
         this.precio = precio;
     }
 
+    public int getCantidad() { return cantidad; }
+
+    public void setCantidad(int cantidad) { this.cantidad = cantidad; }
+
+    public String getDescripcion() { return descripcion; }
+
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+    @Serial
     private static final long serialVersionUID = 1L;
 }
